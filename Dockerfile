@@ -42,9 +42,10 @@ RUN /usr/bin/easy_install supervisor-stdout
 ADD ./supervisord.conf /etc/supervisord.conf
 
 # Install Wordpress
-# For now, for dev, skipping WP download and using local file
-#ADD https://wordpress.org/latest.tar.gz /usr/share/nginx/latest.tar.gz
-COPY ./latest.tar.gz /usr/share/nginx/latest.tar.gz
+# Was: For now, for dev, skipping WP download and using local file
+# COPY ./latest.tar.gz /usr/share/nginx/latest.tar.gz
+# Reverted to:
+ADD https://wordpress.org/latest.tar.gz /usr/share/nginx/latest.tar.gz
 
 RUN cd /usr/share/nginx/ && tar xvf latest.tar.gz && rm latest.tar.gz
 RUN mv /usr/share/nginx/html/5* /usr/share/nginx/wordpress
