@@ -2,20 +2,20 @@
 
 ## Concept
 
-Based on a wordpress site backup (~~config file~~, data dump, wp-content directory), a Docker container is created and started. This container also provides a daily backup of the same files.
+Based on a wordpress site backup (~~config file~~, data dump, wp-content directory), a Docker container is created and started. ~~This container also provides a daily backup of the same files~~
 
 ## Implementation
 
-In the init directory, Docker will find a wp-content directory and SQL dump named wordpress.sql
+In the */export* volume, Docker will find the *wp-content* directory and SQL dump named wordpress.sql
 
 **Before copying these files over (and doing a DB dump), all themes, plugins & wordpress itself should be up to data (latest WP is mandatory).**
 
-At container creation, once wordpress & dependencies are installed:
+At container creation, once wordpress & dependencies are installed, the following should happen:
 
 1. Database is created
 2. MySQL dump is loaded
-3. wp-content directory is copied over (then the nginx plugin is installed)
-4. instance is brought up
+3. The *wp-content* directory is copied over (then the nginx plugin is installed)
+4. The wordpress nstance is brought up
 
 ### Naming convention
 
@@ -43,12 +43,12 @@ Note the mysql password & the WP password in the container log (i.e. write it do
 
 ## TODO
 * Do we really need wp-config.php ?
-** Doing away with accepting it as input for now
+	* Doing away with accepting it as input for now
 * Can this be supplemental to https://github.com/eugeneware/docker-wordpress-nginx instead of modifying it?
 * Rely on exported volumes for wp-content backup
 * Create daily backup on exported volume or let people backup by accessing MySQL on 3306
 * Figure out how to deploy many of these containers for a multi-host setup (nginx-proxy?)
-
+* Remove debugging info
 
 ## Limitations
 
