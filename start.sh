@@ -33,14 +33,20 @@ if [ ! -f /usr/share/nginx/www/wp-config.php ]; then
 
   # TODO: copy the wp-content content into 
   # /usr/share/nginx/www/wp-content
+  echo ">>> Content of /export:"
+  ls /export
+  echo ">>> End content of /export"
+
   echo ">>> Deleting content of default wp-content directory"
   rm -rf /usr/share/nginx/www/wp-content/*
   echo ">>> Deleted content of default wp-content directory"
   echo ">>> Copying content of wordpress backup wp-content directory into the docker container wordpress directory"
   cp -rf /export/wp-content/* /usr/share/nginx/www/wp-content
+  # We must make sure www-data:www-data owns the wp-content directory & its contents
+  chown -R www-data:www-data /usr/share/nginx/www/wp-content
   echo ">>> Copied content of wordpress backup wp-content directory into the docker container wordpress directory"
   ls -lha /usr/share/nginx/www/wp-content
-  
+
   # Download nginx helper plugin
   # this needs to be done after we copy content from our wp-content folder
   curl -O `curl -i -s https://wordpress.org/plugins/nginx-helper/ | egrep -o "https://downloads.wordpress.org/plugin/[^']+"`
@@ -66,9 +72,9 @@ ENDL
   mysqladmin -u root password $MYSQL_PASSWORD
   mysql -uroot -p$MYSQL_PASSWORD -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '$MYSQL_PASSWORD' WITH GRANT OPTION; FLUSH PRIVILEGES;"
   mysql -uroot -p$MYSQL_PASSWORD -e "CREATE DATABASE wordpress; GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress'@'localhost' IDENTIFIED BY '$WORDPRESS_PASSWORD'; FLUSH PRIVILEGES;"
-  # head /export/wordpress.sql
-  # echo "[...]"
-  # tail /export/wordpress.sql
+  head /export/wordpress.sql
+  echo "[...]"
+  tail /export/wordpress.sql
   mysql -uroot -p$MYSQL_PASSWORD $WORDPRESS_DB < /export/wordpress.sql
   mysql -uroot -p$MYSQL_PASSWORD -e "status"
   killall mysqld

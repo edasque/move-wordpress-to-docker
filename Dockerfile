@@ -53,10 +53,7 @@ RUN mv /usr/share/nginx/wordpress /usr/share/nginx/www
 RUN chown -R www-data:www-data /usr/share/nginx/www
 
 ## What's needed to set up things up for a wordpress 'restore'
-COPY /export /export
-RUN   echo ">>> Copying content from external /export"
-RUN ls -lha /export
-RUN   echo ">>> Copied content from external /export"
+VOLUME /export
 
 # Wordpress Initialization and Startup Script
 ADD ./start.sh /start.sh
