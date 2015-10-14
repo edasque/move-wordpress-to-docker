@@ -8,7 +8,7 @@ Based on a wordpress site backup (config file, data dump, wp-content directory),
 
 In the init directory, Docker will find a wp-config file, wp-content directory and SQL dump
 
-> Before copying these files over (and doing a DB dump), all plugins & wordpress itself will have to have been updated to the latest & greatest.
+**Before copying these files over (and doing a DB dump), all themes, plugins & wordpress itself should be up to data (latest WP is mandatory).**
 
 At container creation, once wordpress & dependencies are installed:
 
@@ -24,8 +24,9 @@ At container creation, once wordpress & dependencies are installed:
 * Database dump will be called wordpress.sql and found at the root
 * Wordpress content directory will be called wp-content and found at the root
 
-## Setup
-* something
-* another
+## TODO
+* Do we really need wp-config.php ?
+** Doing away with accepting it as input for now
+* Can this be supplemental to https://github.com/eugeneware/docker-wordpress-nginx instead of modifying it?
 
 
