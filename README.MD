@@ -26,6 +26,8 @@ At container creation, once wordpress & dependencies are installed:
 ### Of note
 
 * the database will be called wordpress, make sure the DB dump doesn't use another database (nor does it create one)
+* I'll need help from the community to make this as generic as possible
+* The core of this project is a 'fork' from https://github.com/eugeneware/docker-wordpress-nginx
 
 ## Usage
 Create the image:
